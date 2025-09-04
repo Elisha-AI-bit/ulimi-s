@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { Farm, Crop, Product, Order, IoTSensor, User } from '../types';
-import { demoFarms, demoCrops, demoProducts, demoOrders, demoIoTSensors } from '../data/demoData';
+import { demoFarms, demoCrops, demoProducts, demoOrders, demoIoTSensors, demoUsers } from '../data/demoData';
 
 interface AppContextType {
   // Farms

@@ -11,7 +11,7 @@ const Crops: React.FC = () => {
   const [editingCrop, setEditingCrop] = useState<string | null>(null);
 
   const userFarms = farms.filter(f => f.farmerId === user?.id);
-  const userCrops = crops.filter(c => userFarms.some(f => f.id === c.farmId));
+  const userCrops = crops.filter(c => userFarms && userFarms.some(f => f.id === c.farmId));
 
   const [formData, setFormData] = useState({
     farmId: '',

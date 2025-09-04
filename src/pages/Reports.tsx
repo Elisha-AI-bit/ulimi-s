@@ -30,7 +30,7 @@ const Reports: React.FC = () => {
     
     if (user?.role === 'farmer') {
       const userFarms = farms.filter(f => f.farmerId === user.id);
-      const userCrops = crops.filter(c => userFarms.some(f => f.id === c.farmId));
+      const userCrops = crops.filter(c => userFarms && userFarms.some(f => f.id === c.farmId));
       const userProducts = products.filter(p => p.farmerId === user.id);
       
       doc.setFontSize(16);
@@ -113,7 +113,7 @@ const Reports: React.FC = () => {
     
     if (user?.role === 'farmer') {
       const userFarms = farms.filter(f => f.farmerId === user.id);
-      const userCrops = crops.filter(c => userFarms.some(f => f.id === c.farmId));
+      const userCrops = crops.filter(c => userFarms && userFarms.some(f => f.id === c.farmId));
       const userProducts = products.filter(p => p.farmerId === user.id);
       
       csvContent = 'Farm Name,Location,Size (hectares),Soil Type,Crops Count,Products Listed\n';
@@ -136,7 +136,7 @@ const Reports: React.FC = () => {
         const farmerName = allUsers.find(u => u.id === farm.farmerId)?.name || 'Unknown';
         const farmRevenue = orders.reduce((sum, order) => {
           return sum + order.items.reduce((itemSum, item) => {
-            return farmProducts.some(p => p.id === item.productId) ? itemSum + item.total : itemSum;
+            return farmProducts && farmProducts.some(p => p.id === item.productId) ? itemSum + item.total : itemSum;
           }, 0);
         }, 0);
         

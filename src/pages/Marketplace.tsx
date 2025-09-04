@@ -116,7 +116,7 @@ const Marketplace: React.FC = () => {
   };
 
   const userFarms = farms.filter(f => f.farmerId === user?.id);
-  const userCrops = crops.filter(c => userFarms.some(f => f.id === c.farmId));
+  const userCrops = crops.filter(c => userFarms && userFarms.some(f => f.id === c.farmId));
 
   const getCropsForFarm = (farmId: string) => {
     return crops.filter(c => c.farmId === farmId);

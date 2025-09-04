@@ -46,7 +46,7 @@ const IoT: React.FC = () => {
           <p className="text-gray-600">Monitor your farm sensors in real-time</p>
         </div>
         <a
-          href="https://thingsboard.io/docs/user-guide/dashboards/"
+          href="ulimi-iot.vercel.app"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"

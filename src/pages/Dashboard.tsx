@@ -14,10 +14,11 @@ const Dashboard: React.FC = () => {
     switch (user?.role) {
       case 'farmer':
         const userFarms = farms.filter(f => f.farmerId === user.id);
-        const userCrops = crops.filter(c => userFarms.some(f => f.id === c.farmId));
+        const userCrops = crops.filter(c => userFarms && userFarms.some(f => f.id === c.farmId));
         const userProducts = products.filter(p => p.farmerId === user.id);
         const userRevenue = orders
-          .filter(o => o.items.some(item => userProducts.some(p => p.id === item.productId)))
+          .filter(o => o.items && o.items.some(item => 
+            userProducts && userProducts.some(p => p.id === item.productId)))
           .reduce((sum, order) => sum + order.total, 0);
 
         return [

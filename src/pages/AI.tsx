@@ -23,25 +23,76 @@ const AI: React.FC = () => {
     setTimeout(() => {
       const mockResults = [
         {
-          disease: 'Early Blight',
-          confidence: 87,
-          description: 'Fungal disease affecting tomato leaves',
-          treatment: 'Apply copper-based fungicide every 7-14 days',
-          severity: 'moderate'
+          disease: 'Tomato Early Blight',
+          confidence: 89,
+          description: 'Fungal disease causing dark spots with concentric rings on leaves, starting from bottom leaves',
+          treatment: 'Remove affected leaves, apply copper-based fungicide every 7-14 days, improve air circulation',
+          severity: 'moderate',
+          prevention: 'Avoid overhead watering, space plants properly, rotate crops annually'
+        },
+        {
+          disease: 'Maize Leaf Blight',
+          confidence: 85,
+          description: 'Fungal infection causing elongated lesions on maize leaves, reducing photosynthesis',
+          treatment: 'Apply propiconazole-based fungicide, remove infected plant debris',
+          severity: 'severe',
+          prevention: 'Use resistant varieties, ensure proper drainage, avoid dense planting'
+        },
+        {
+          disease: 'Cabbage Black Rot',
+          confidence: 82,
+          description: 'Bacterial disease causing V-shaped yellow lesions from leaf edges, leading to black veins',
+          treatment: 'Remove infected plants immediately, apply copper bactericide, improve field sanitation',
+          severity: 'severe',
+          prevention: 'Use certified disease-free seeds, avoid overhead irrigation, practice crop rotation'
+        },
+        {
+          disease: 'Powdery Mildew',
+          confidence: 91,
+          description: 'White powdery fungal growth on leaves and stems, common in humid conditions',
+          treatment: 'Apply sulfur-based fungicide, improve air circulation, reduce humidity',
+          severity: 'moderate',
+          prevention: 'Avoid overcrowding plants, water at soil level, ensure good ventilation'
+        },
+        {
+          disease: 'Bacterial Wilt',
+          confidence: 88,
+          description: 'Bacterial infection causing sudden wilting and yellowing of plants',
+          treatment: 'Remove infected plants, disinfect tools, apply copper bactericide to healthy plants',
+          severity: 'severe',
+          prevention: 'Use resistant varieties, avoid wounding plants, practice crop rotation'
         },
         {
           disease: 'Healthy Plant',
-          confidence: 92,
-          description: 'Plant appears healthy with no visible diseases',
-          treatment: 'Continue current care routine',
-          severity: 'none'
+          confidence: 95,
+          description: 'Plant appears healthy with no visible diseases or pest damage',
+          treatment: 'Continue current care routine and monitoring',
+          severity: 'none',
+          prevention: 'Maintain good cultural practices and regular monitoring'
         },
         {
           disease: 'Aphid Infestation',
-          confidence: 78,
-          description: 'Small green insects on plant leaves',
-          treatment: 'Use neem oil spray or introduce ladybugs',
-          severity: 'mild'
+          confidence: 87,
+          description: 'Small green or black insects clustering on leaves and stems, causing yellowing and stunted growth',
+          treatment: 'Spray with neem oil or insecticidal soap, introduce ladybugs, remove heavily infested leaves',
+          severity: 'moderate',
+          prevention: 'Plant companion crops like marigolds, maintain good garden hygiene, avoid over-fertilizing with nitrogen'
+        },
+        {
+          disease: 'Downy Mildew',
+          confidence: 84,
+          description: 'Yellow patches on upper leaf surface with fuzzy gray-white growth on undersides, common in cool, wet conditions',
+          treatment: 'Apply copper-based fungicide, improve air circulation, reduce humidity around plants',
+          severity: 'moderate',
+          prevention: 'Avoid overhead watering, ensure proper spacing, plant resistant varieties'
+        },
+        {
+          disease: 'Fusarium Wilt',
+          confidence: 90,
+          description: 'Yellowing and wilting of lower leaves progressing upward, brown discoloration in stem when cut',
+          treatment: 'Remove infected plants immediately, soil solarization, apply beneficial microorganisms',
+          severity: 'severe',
+          prevention: 'Use resistant varieties, practice crop rotation, avoid overwatering, improve soil drainage'
         }
       ];
       
@@ -200,6 +251,11 @@ const AI: React.FC = () => {
                 <div>
                   <h5 className="font-medium text-gray-900 mb-2">Recommended Treatment:</h5>
                   <p className="text-gray-700">{diagnosisResult.treatment}</p>
+                </div>
+                
+                <div>
+                  <h5 className="font-medium text-gray-900 mb-2">Prevention Tips:</h5>
+                  <p className="text-gray-700">{diagnosisResult.prevention}</p>
                 </div>
               </div>
             </div>

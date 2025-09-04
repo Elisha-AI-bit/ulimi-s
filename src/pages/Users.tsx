@@ -78,7 +78,7 @@ const Users: React.FC = () => {
   };
 
   const handleDeleteUser = (userId: string) => {
-    if (confirm('Are you sure you want to delete this user?')) {
+    if (window.confirm('Are you sure you want to delete this user? All their farms, crops, and products will also be deleted.')) {
       deleteUser(userId);
     }
   };

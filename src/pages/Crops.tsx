@@ -90,7 +90,7 @@ const Crops: React.FC = () => {
   };
 
   const handleDelete = (cropId: string) => {
-    if (confirm('Are you sure you want to delete this crop?')) {
+    if (window.confirm('Are you sure you want to delete this crop? All associated products will also be deleted.')) {
       deleteCrop(cropId);
     }
   };

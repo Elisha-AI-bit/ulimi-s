@@ -79,7 +79,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   });
   const [users, setUsers] = useState<User[]>(() => {
     const saved = localStorage.getItem('ulimi_users');
-    return saved ? JSON.parse(saved) : [];
+    return saved ? JSON.parse(saved) : demoUsers;
   });
   const [iotSensors] = useState<IoTSensor[]>(demoIoTSensors);
   const [cart, setCart] = useState<{ productId: string; quantity: number }[]>([]);

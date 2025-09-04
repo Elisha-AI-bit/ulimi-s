@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useApp } from '../contexts/AppContext';
-import { Download, FileText, BarChart3, Calendar, MapPin, TrendingUp, Users, ShoppingCart, Save } from 'lucide-react';
+import { Download, FileText, BarChart3, Calendar, MapPin, TrendingUp, Users, ShoppingCart, Package } from 'lucide-react';
 import jsPDF from 'jspdf';
 import { saveAs } from 'file-saver';
 import { demoUsers } from '../data/demoData';
@@ -75,6 +75,34 @@ const Reports: React.FC = () => {
       doc.text(`Farmers: ${allUsers.filter(u => u.role === 'farmer').length}`, 20, yPosition);
       yPosition += 10;
       doc.text(`Customers: ${allUsers.filter(u => u.role === 'customer').length}`, 20, yPosition);
+    } else if (user?.role === 'customer') {
+      const customerOrders = orders.filter(o => o.customerId === user.id);
+      const totalSpent = customerOrders.reduce((sum, o) => sum + o.total, 0);
+      const avgOrderValue = customerOrders.length > 0 ? totalSpent / customerOrders.length : 0;
+      
+      doc.setFontSize(16);
+      doc.text('Customer Summary', 20, yPosition);
+      yPosition += 20;
+      
+      doc.setFontSize(12);
+      doc.text(`Total Orders: ${customerOrders.length}`, 20, yPosition);
+      yPosition += 10;
+      doc.text(`Total Spent: K ${totalSpent}`, 20, yPosition);
+      yPosition += 10;
+      doc.text(`Average Order Value: K ${avgOrderValue.toFixed(2)}`, 20, yPosition);
+      yPosition += 10;
+      doc.text(`Delivered Orders: ${customerOrders.filter(o => o.status === 'delivered').length}`, 20, yPosition);
+      yPosition += 20;
+      
+      if (customerOrders.length > 0) {
+        doc.text('Recent Orders:', 20, yPosition);
+        yPosition += 15;
+        
+        customerOrders.slice(0, 5).forEach(order => {
+          doc.text(`• Order #${order.id.slice(-8)} - K ${order.total} (${order.status})`, 25, yPosition);
+          yPosition += 10;
+        });
+      }
     }
 
     doc.save(`ulimi-report-${new Date().toISOString().split('T')[0]}.pdf`);
@@ -96,9 +124,9 @@ const Reports: React.FC = () => {
       });
     } else if (user?.role === 'customer') {
       const customerOrders = orders.filter(o => o.customerId === user.id);
-      csvContent = 'Order ID,Date,Status,Total Amount,Items Count\n';
+      csvContent = 'Order ID,Date,Status,Total Amount,Items Count,Delivery Address\n';
       customerOrders.forEach(order => {
-        csvContent += `"${order.id}","${order.createdAt}","${order.status}",${order.total},${order.items.length}\n`;
+        csvContent += `"${order.id}","${order.createdAt}","${order.status}",${order.total},${order.items.length},"${order.shippingAddress}"\n`;
       });
     } else if (user?.role === 'admin') {
       csvContent = 'Farm Name,Farmer,Location,Size,Crops,Products,Revenue\n';
@@ -128,7 +156,8 @@ const Reports: React.FC = () => {
     ],
     customer: [
       { value: 'orders', label: 'Order History' },
-      { value: 'spending', label: 'Spending Report' }
+      { value: 'spending', label: 'Spending Report' },
+      { value: 'summary', label: 'Customer Summary' }
     ],
     admin: [
       { value: 'platform', label: 'Platform Overview' },
@@ -232,7 +261,7 @@ const Reports: React.FC = () => {
         )}
 
         {user?.role === 'customer' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-blue-50 rounded-lg p-4 text-center">
               <Package className="h-8 w-8 text-blue-600 mx-auto mb-2" />
               <div className="text-2xl font-bold text-blue-600">
@@ -247,6 +276,14 @@ const Reports: React.FC = () => {
                 K {orders.filter(o => o.customerId === user.id).reduce((sum, o) => sum + o.total, 0)}
               </div>
               <div className="text-gray-600">Total Spent</div>
+            </div>
+            
+            <div className="bg-green-50 rounded-lg p-4 text-center">
+              <ShoppingCart className="h-8 w-8 text-green-600 mx-auto mb-2" />
+              <div className="text-2xl font-bold text-green-600">
+                {products.filter(p => p.status === 'approved').length}
+              </div>
+              <div className="text-gray-600">Available Products</div>
             </div>
           </div>
         )}
@@ -301,6 +338,7 @@ const Reports: React.FC = () => {
                 {report.value === 'spending' && 'Purchase patterns and budget analysis'}
                 {report.value === 'platform' && 'Comprehensive platform statistics'}
                 {report.value === 'users' && 'User engagement and activity metrics'}
+                {user?.role === 'customer' && report.value === 'summary' && 'Complete customer activity and purchase summary'}
               </p>
               
               <div className="flex space-x-2">

@@ -181,6 +181,29 @@ export const aiQuestions: AIQuestion[] = [
     answer: 'Conservation agriculture involves minimal soil disturbance, permanent soil cover with crop residues or cover crops, and crop rotation. This practice improves soil health, reduces erosion, and increases water retention while maintaining yields.',
     category: 'Sustainable Farming',
     keywords: ['conservation', 'agriculture', 'minimal tillage', 'soil cover', 'rotation', 'erosion']
+  },
+
+  // Pest and Disease Management (Additional)
+  {
+    id: 'pest4',
+    question: 'How do I identify and treat aphids on my crops?',
+    answer: 'Aphids are small, soft-bodied insects that cluster on leaves and stems. They cause yellowing, stunted growth, and sticky honeydew. Treat with neem oil, insecticidal soap, or introduce beneficial insects like ladybugs. Remove heavily infested leaves.',
+    category: 'Pest Control',
+    keywords: ['aphids', 'insects', 'yellowing', 'honeydew', 'neem oil', 'ladybugs']
+  },
+  {
+    id: 'disease4',
+    question: 'What is downy mildew and how do I treat it?',
+    answer: 'Downy mildew appears as yellow patches on upper leaf surfaces with fuzzy gray-white growth underneath. It thrives in cool, wet conditions. Treat with copper-based fungicides, improve air circulation, and avoid overhead watering.',
+    category: 'Disease Management',
+    keywords: ['downy mildew', 'yellow patches', 'fuzzy growth', 'copper fungicide', 'air circulation']
+  },
+  {
+    id: 'disease5',
+    question: 'How do I recognize and manage fusarium wilt?',
+    answer: 'Fusarium wilt causes yellowing and wilting of lower leaves that progresses upward. Cut stems show brown discoloration. Remove infected plants immediately, practice crop rotation, use resistant varieties, and improve soil drainage.',
+    category: 'Disease Management',
+    keywords: ['fusarium wilt', 'yellowing', 'wilting', 'brown stem', 'resistant varieties', 'drainage']
   }
 ];
 

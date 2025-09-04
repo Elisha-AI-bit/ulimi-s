@@ -56,7 +56,7 @@ const Farms: React.FC = () => {
   };
 
   const handleDelete = (farmId: string) => {
-    if (confirm('Are you sure you want to delete this farm? All associated crops will also be deleted.')) {
+    if (window.confirm('Are you sure you want to delete this farm? All associated crops and products will also be deleted.')) {
       deleteFarm(farmId);
     }
   };

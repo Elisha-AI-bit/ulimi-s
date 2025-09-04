@@ -212,7 +212,7 @@ export const getAIResponse = (userInput: string): string => {
   
   // Find matching questions based on keywords
   const matches = aiQuestions.filter(q => 
-    q.keywords.some(keyword => input.includes(keyword)) ||
+    (q.keywords && q.keywords.some(keyword => input.includes(keyword))) ||
     input.includes(q.question.toLowerCase())
   );
 

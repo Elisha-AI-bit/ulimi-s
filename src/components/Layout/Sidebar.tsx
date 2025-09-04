@@ -5,10 +5,15 @@ import {
   Home, MapPin, Wheat, ShoppingCart, CloudRain, TestTube,
   Cpu, Bot, BarChart3, Users, Settings, User, CheckCircle,
   TrendingUp, MessageSquare, FileText, Smartphone, Newspaper,
-  ShoppingBag, Package
+  Package, X
 } from 'lucide-react';
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+  sidebarOpen?: boolean;
+  setSidebarOpen?: (open: boolean) => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ sidebarOpen, setSidebarOpen }) => {
   const { user } = useAuth();
 
   const navItems = {
@@ -52,31 +57,56 @@ const Sidebar: React.FC = () => {
   const items = user ? [...navItems[user.role], ...commonItems] : [];
 
   return (
-    <div className="bg-white w-64 min-h-screen shadow-lg border-r border-gray-200 fixed left-0 top-16 z-30 overflow-y-auto">
-      <div className="p-4">
-        <nav className="space-y-2">
-          {items.map((item) => {
-            const Icon = item.icon;
-            return (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={({ isActive }) =>
-                  `flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 hover:bg-emerald-50 hover:text-emerald-700 ${
-                    isActive
-                      ? 'bg-emerald-100 text-emerald-700 border-r-4 border-emerald-500'
-                      : 'text-gray-700 hover:bg-gray-50'
-                  }`
-                }
-              >
-                <Icon className="h-5 w-5" />
-                <span className="font-medium">{item.name}</span>
-              </NavLink>
-            );
-          })}
-        </nav>
+    <>
+      {/* Mobile sidebar overlay */}
+      {sidebarOpen && (
+        <div 
+          className="fixed inset-0 z-40 bg-black bg-opacity-50 md:hidden"
+          onClick={() => setSidebarOpen && setSidebarOpen(false)}
+        ></div>
+      )}
+      
+      {/* Sidebar */}
+      <div 
+        className={`bg-white min-h-screen shadow-lg border-r border-gray-200 fixed left-0 top-16 z-30 overflow-y-auto transition-all duration-300 ease-in-out md:translate-x-0 md:static md:z-auto
+          ${sidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full w-0 md:w-64'}`}
+      >
+        <div className="p-4">
+          {/* Close button for mobile */}
+          <div className="flex justify-end mb-2 md:hidden">
+            <button 
+              onClick={() => setSidebarOpen && setSidebarOpen(false)}
+              className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+          
+          <nav className="space-y-2">
+            {items.map((item) => {
+              const Icon = item.icon;
+              return (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setSidebarOpen && setSidebarOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 hover:bg-emerald-50 hover:text-emerald-700 ${
+                      isActive
+                        ? 'bg-emerald-100 text-emerald-700 border-r-4 border-emerald-500'
+                        : 'text-gray-700 hover:bg-gray-50'
+                    }`
+                  }
+                >
+                  <Icon className="h-5 w-5 flex-shrink-0" />
+                  <span className="font-medium truncate">{item.name}</span>
+                </NavLink>
+              );
+            })}
+          </nav>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

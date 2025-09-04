@@ -124,7 +124,7 @@ const Marketplace: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Marketplace</h1>
           <p className="text-gray-600">Discover fresh produce from local farmers</p>
@@ -132,7 +132,7 @@ const Marketplace: React.FC = () => {
         {user?.role === 'farmer' && (
           <button
             onClick={() => setShowAddForm(true)}
-            className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
+            className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors whitespace-nowrap"
           >
             <Plus className="h-4 w-4" />
             <span>List Product</span>
@@ -141,8 +141,8 @@ const Marketplace: React.FC = () => {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <input
@@ -150,14 +150,14 @@ const Marketplace: React.FC = () => {
               placeholder="Search products..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
             />
           </div>
           
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
           >
             {categories.map(category => (
               <option key={category} value={category === 'All' ? '' : category}>
@@ -169,7 +169,7 @@ const Marketplace: React.FC = () => {
           <select
             value={selectedLocation}
             onChange={(e) => setSelectedLocation(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
           >
             {locations.map(location => (
               <option key={location} value={location === 'All' ? '' : location}>
@@ -178,7 +178,7 @@ const Marketplace: React.FC = () => {
             ))}
           </select>
           
-          <button className="flex items-center justify-center space-x-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">
+          <button className="flex items-center justify-center space-x-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors text-sm md:text-base">
             <Filter className="h-4 w-4" />
             <span>More Filters</span>
           </button>
@@ -187,7 +187,7 @@ const Marketplace: React.FC = () => {
 
       {/* Add/Edit Product Form */}
       {showAddForm && user?.role === 'farmer' && (
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
             {editingProduct ? 'Edit Product' : 'List New Product'}
           </h3>
@@ -198,9 +198,9 @@ const Marketplace: React.FC = () => {
                 value={formData.farmId}
                 onChange={(e) => setFormData({ ...formData, farmId: e.target.value, cropId: '' })}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
               >
-                <option value="">Select farm</option>
+                <option value="">Select a farm</option>
                 {userFarms.map(farm => (
                   <option key={farm.id} value={farm.id}>{farm.name}</option>
                 ))}
@@ -214,10 +214,10 @@ const Marketplace: React.FC = () => {
                 onChange={(e) => setFormData({ ...formData, cropId: e.target.value })}
                 required
                 disabled={!formData.farmId}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 disabled:opacity-50"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
               >
-                <option value="">Select crop</option>
-                {getCropsForFarm(formData.farmId).map(crop => (
+                <option value="">Select a crop</option>
+                {formData.farmId && getCropsForFarm(formData.farmId).map(crop => (
                   <option key={crop.id} value={crop.id}>{crop.type} - {crop.variety}</option>
                 ))}
               </select>
@@ -230,8 +230,8 @@ const Marketplace: React.FC = () => {
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder="Enter product name"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
+                placeholder="e.g., Fresh Tomatoes"
               />
             </div>
             
@@ -241,66 +241,65 @@ const Marketplace: React.FC = () => {
                 value={formData.category}
                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
               >
-                <option value="Vegetables">Vegetables</option>
-                <option value="Grains">Grains</option>
-                <option value="Fruits">Fruits</option>
-                <option value="Legumes">Legumes</option>
+                {categories.filter(cat => cat !== 'All').map(category => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
               </select>
             </div>
             
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
-              <input
-                type="number"
-                value={formData.quantity}
-                onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
-                required
-                min="1"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder="Enter quantity"
-              />
+              <div className="flex">
+                <input
+                  type="number"
+                  value={formData.quantity}
+                  onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
+                  required
+                  min="1"
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
+                  placeholder="Enter quantity"
+                />
+                <select
+                  value={formData.unit}
+                  onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
+                  className="border-y border-r border-gray-300 rounded-r-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 px-2 text-sm md:text-base"
+                >
+                  <option value="kg">kg</option>
+                  <option value="g">g</option>
+                  <option value="pieces">pieces</option>
+                  <option value="bunches">bunches</option>
+                </select>
+              </div>
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Unit</label>
-              <select
-                value={formData.unit}
-                onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-              >
-                <option value="kg">Kilograms (kg)</option>
-                <option value="bags">Bags</option>
-                <option value="pieces">Pieces</option>
-                <option value="bundles">Bundles</option>
-              </select>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Price per {formData.unit}</label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">K</span>
+                <input
+                  type="number"
+                  value={formData.pricePerUnit}
+                  onChange={(e) => setFormData({ ...formData, pricePerUnit: e.target.value })}
+                  required
+                  min="0"
+                  step="0.01"
+                  className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
+                  placeholder="0.00"
+                />
+              </div>
             </div>
             
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Price per Unit (K)</label>
-              <input
-                type="number"
-                value={formData.pricePerUnit}
-                onChange={(e) => setFormData({ ...formData, pricePerUnit: e.target.value })}
-                required
-                min="0"
-                step="0.01"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder="Enter price"
-              />
-            </div>
-            
-            <div>
+            <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
               <input
                 type="text"
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder="Enter pickup location"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
+                placeholder="e.g., Chongwe District, Lusaka"
               />
             </div>
             
@@ -311,23 +310,23 @@ const Marketplace: React.FC = () => {
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 required
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder="Describe your product"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
+                placeholder="Describe your product quality, harvest date, etc."
               />
             </div>
             
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">Image URL (optional)</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Image URL (Optional)</label>
               <input
                 type="url"
                 value={formData.image}
                 onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder="Enter image URL or leave blank for default"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
+                placeholder="https://example.com/image.jpg"
               />
             </div>
             
-            <div className="md:col-span-2 flex space-x-3 pt-4">
+            <div className="md:col-span-2 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
               <button
                 type="submit"
                 className="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
@@ -362,80 +361,87 @@ const Marketplace: React.FC = () => {
       )}
 
       {/* Products Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
         {filteredProducts.map((product) => (
           <div key={product.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-6">
+            <div className="relative">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-48 object-cover"
+              />
+              {user?.role === 'farmer' && product.farmerId === user.id && (
+                <div className="absolute top-2 right-2 flex space-x-1">
+                  <button
+                    onClick={() => handleEdit(product)}
+                    className="p-2 bg-white bg-opacity-80 text-blue-600 rounded-full hover:bg-opacity-100 transition-all"
+                  >
+                    <Edit className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(product.id)}
+                    className="p-2 bg-white bg-opacity-80 text-red-600 rounded-full hover:bg-opacity-100 transition-all"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
+            </div>
+            
+            <div className="p-4">
               <div className="flex justify-between items-start mb-2">
-                <h3 className="text-lg font-semibold text-gray-900">{product.name}</h3>
-                <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full">
-                  {product.category}
-                </span>
+                <h3 className="font-semibold text-gray-900">{product.name}</h3>
+                <span className="text-sm text-gray-500">{product.category}</span>
               </div>
               
-              <p className="text-gray-600 text-sm mb-4 line-clamp-2">{product.description}</p>
-              
-              <div className="space-y-2 mb-4">
-                <div className="flex items-center space-x-2 text-gray-600">
-                  <MapPin className="h-4 w-4" />
-                  <span className="text-sm">{product.location}</span>
-                </div>
-                
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Quantity: {product.quantity} {product.unit}</span>
-                  <span className="text-xl font-bold text-emerald-600">K {product.pricePerUnit}/{product.unit}</span>
-                </div>
+              <div className="flex items-center space-x-1 text-gray-600 mb-2">
+                <MapPin className="h-4 w-4" />
+                <span className="text-sm">{product.location}</span>
               </div>
               
-              <div className="flex space-x-2">
-                {user?.role === 'customer' && (
+              <div className="flex justify-between items-center mb-3">
+                <span className="text-lg font-bold text-emerald-600">K {product.pricePerUnit.toFixed(2)}</span>
+                <span className="text-sm text-gray-500">per {product.unit}</span>
+              </div>
+              
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-gray-600">{product.quantity} {product.unit} available</span>
+                {user?.role === 'customer' ? (
                   <button
                     onClick={() => handleAddToCart(product.id)}
-                    className="flex-1 flex items-center justify-center space-x-2 bg-emerald-600 text-white py-2 px-4 rounded-lg hover:bg-emerald-700 transition-colors"
+                    className="flex items-center space-x-1 bg-emerald-600 text-white px-3 py-1 rounded-lg hover:bg-emerald-700 transition-colors text-sm"
                   >
                     <ShoppingCart className="h-4 w-4" />
-                    <span>Add to Cart</span>
+                    <span>Add</span>
                   </button>
-                )}
-                
-                <button className="flex items-center justify-center p-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
-                  <Eye className="h-4 w-4" />
-                </button>
-                
-                {user?.role === 'farmer' && product.farmerId === user.id && (
-                  <>
-                    <button
-                      onClick={() => handleEdit(product)}
-                      className="flex items-center justify-center p-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
-                    >
-                      <Edit className="h-4 w-4" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(product.id)}
-                      className="flex items-center justify-center p-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                  </>
-                )}
+                ) : user?.role === 'farmer' && product.farmerId === user.id ? (
+                  <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded-full">
+                    Your Product
+                  </span>
+                ) : null}
               </div>
             </div>
           </div>
         ))}
+        
+        {filteredProducts.length === 0 && (
+          <div className="sm:col-span-2 lg:col-span-3 xl:col-span-4 text-center py-12">
+            <Search className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No products found</h3>
+            <p className="text-gray-600 mb-4">Try adjusting your search or filter criteria</p>
+            <button
+              onClick={() => {
+                setSearchTerm('');
+                setSelectedCategory('');
+                setSelectedLocation('');
+              }}
+              className="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
+            >
+              Clear Filters
+            </button>
+          </div>
+        )}
       </div>
-      
-      {filteredProducts.length === 0 && (
-        <div className="text-center py-12">
-          <ShoppingCart className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No products found</h3>
-          <p className="text-gray-600">Try adjusting your search or filters</p>
-        </div>
-      )}
     </div>
   );
 };

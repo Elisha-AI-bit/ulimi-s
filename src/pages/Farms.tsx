@@ -67,14 +67,14 @@ const Farms: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">My Farms</h1>
           <p className="text-gray-600">Manage your farming operations</p>
         </div>
         <button
           onClick={() => setShowAddForm(true)}
-          className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
+          className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors whitespace-nowrap"
         >
           <Plus className="h-4 w-4" />
           <span>Add New Farm</span>
@@ -83,7 +83,7 @@ const Farms: React.FC = () => {
 
       {/* Add/Edit Farm Form */}
       {showAddForm && (
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
             {editingFarm ? 'Edit Farm' : 'Add New Farm'}
           </h3>
@@ -143,7 +143,7 @@ const Farms: React.FC = () => {
               </select>
             </div>
             
-            <div className="md:col-span-2 flex space-x-3">
+            <div className="md:col-span-2 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
               <button
                 type="submit"
                 className="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
@@ -167,12 +167,12 @@ const Farms: React.FC = () => {
       )}
 
       {/* Farms Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {userFarms.map((farm) => (
           <div key={farm.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
-            <div className="p-6">
+            <div className="p-4 md:p-6">
               <div className="flex justify-between items-start mb-4">
-                <h3 className="text-xl font-semibold text-gray-900">{farm.name}</h3>
+                <h3 className="text-lg md:text-xl font-semibold text-gray-900">{farm.name}</h3>
                 <div className="flex space-x-2">
                   <button
                     onClick={() => handleEdit(farm)}
@@ -191,18 +191,18 @@ const Farms: React.FC = () => {
               
               <div className="space-y-3">
                 <div className="flex items-center space-x-2 text-gray-600">
-                  <MapPin className="h-4 w-4" />
-                  <span>{farm.location}</span>
+                  <MapPin className="h-4 w-4 flex-shrink-0" />
+                  <span className="text-sm">{farm.location}</span>
                 </div>
                 
                 <div className="flex items-center space-x-2 text-gray-600">
-                  <Ruler className="h-4 w-4" />
-                  <span>{farm.size} hectares</span>
+                  <Ruler className="h-4 w-4 flex-shrink-0" />
+                  <span className="text-sm">{farm.size} hectares</span>
                 </div>
                 
                 <div className="flex items-center space-x-2 text-gray-600">
-                  <Mountain className="h-4 w-4" />
-                  <span>{farm.soilType}</span>
+                  <Mountain className="h-4 w-4 flex-shrink-0" />
+                  <span className="text-sm">{farm.soilType}</span>
                 </div>
                 
                 <div className="mt-4 p-3 bg-emerald-50 rounded-lg">
@@ -217,7 +217,7 @@ const Farms: React.FC = () => {
         ))}
         
         {userFarms.length === 0 && (
-          <div className="md:col-span-2 lg:col-span-3 text-center py-12">
+          <div className="sm:col-span-2 lg:col-span-3 text-center py-8 md:py-12">
             <MapPin className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 mb-2">No farms yet</h3>
             <p className="text-gray-600 mb-4">Start by adding your first farm to begin managing your crops</p>

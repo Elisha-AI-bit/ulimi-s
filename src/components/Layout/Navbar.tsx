@@ -1,8 +1,13 @@
 import React from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { User, LogOut, Bell } from 'lucide-react';
+import { User, LogOut, Bell, Menu, X } from 'lucide-react';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  sidebarOpen?: boolean;
+  setSidebarOpen?: (open: boolean) => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ sidebarOpen, setSidebarOpen }) => {
   const { user, logout } = useAuth();
 
   return (
@@ -10,8 +15,16 @@ const Navbar: React.FC = () => {
       <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
+            {/* Mobile menu button */}
+            <button
+              className="md:hidden mr-2 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+              onClick={() => setSidebarOpen && setSidebarOpen(!sidebarOpen)}
+            >
+              {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+            
             <div className="flex-shrink-0">
-              <h1 className="text-2xl font-bold text-emerald-600">Ulimi</h1>
+              <h1 className="text-xl md:text-2xl font-bold text-emerald-600">Ulimi</h1>
             </div>
           </div>
           
@@ -34,7 +47,7 @@ const Navbar: React.FC = () => {
                   </div>
                 )}
                 <div className="hidden sm:block">
-                  <p className="text-sm font-medium text-gray-900">{user?.name}</p>
+                  <p className="text-sm font-medium text-gray-900 truncate max-w-[120px]">{user?.name}</p>
                   <p className="text-xs text-gray-500 capitalize">{user?.role}</p>
                 </div>
               </div>

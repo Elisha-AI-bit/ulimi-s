@@ -101,7 +101,7 @@ const Crops: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Crop Management</h1>
           <p className="text-gray-600">Track your crops across all farms</p>
@@ -109,7 +109,7 @@ const Crops: React.FC = () => {
         <button
           onClick={() => setShowAddForm(true)}
           disabled={userFarms.length === 0}
-          className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center space-x-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
         >
           <Plus className="h-4 w-4" />
           <span>Add New Crop</span>
@@ -117,25 +117,25 @@ const Crops: React.FC = () => {
       </div>
 
       {userFarms.length === 0 && (
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 text-center">
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 md:p-6 text-center">
           <p className="text-amber-800">You need to add a farm first before planting crops.</p>
         </div>
       )}
 
       {/* Add/Edit Crop Form */}
       {showAddForm && (
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">
             {editingCrop ? 'Edit Crop' : 'Add New Crop'}
           </h3>
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Farm</label>
               <select
                 value={formData.farmId}
                 onChange={(e) => setFormData({ ...formData, farmId: e.target.value })}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
               >
                 <option value="">Select farm</option>
                 {userFarms.map(farm => (
@@ -150,7 +150,7 @@ const Crops: React.FC = () => {
                 value={formData.type}
                 onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
               >
                 <option value="">Select crop type</option>
                 {cropTypes.map(type => (
@@ -166,7 +166,7 @@ const Crops: React.FC = () => {
                 value={formData.variety}
                 onChange={(e) => setFormData({ ...formData, variety: e.target.value })}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
                 placeholder="Enter variety"
               />
             </div>
@@ -178,7 +178,7 @@ const Crops: React.FC = () => {
                 value={formData.plantingDate}
                 onChange={(e) => setFormData({ ...formData, plantingDate: e.target.value })}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
               />
             </div>
             
@@ -189,7 +189,7 @@ const Crops: React.FC = () => {
                 value={formData.expectedHarvest}
                 onChange={(e) => setFormData({ ...formData, expectedHarvest: e.target.value })}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
               />
             </div>
             
@@ -199,7 +199,7 @@ const Crops: React.FC = () => {
                 value={formData.status}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
               >
                 <option value="planted">Planted</option>
                 <option value="growing">Growing</option>
@@ -218,12 +218,12 @@ const Crops: React.FC = () => {
                 required
                 min="0"
                 step="0.1"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm md:text-base"
                 placeholder="Enter area"
               />
             </div>
             
-            <div className="md:col-span-3 flex space-x-3 pt-4">
+            <div className="lg:col-span-3 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
               <button
                 type="submit"
                 className="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
@@ -255,14 +255,14 @@ const Crops: React.FC = () => {
       )}
 
       {/* Crops Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {userCrops.map((crop) => (
           <div key={crop.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
-            <div className="p-6">
+            <div className="p-4 md:p-6">
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">{crop.type}</h3>
-                  <p className="text-sm text-gray-600">{crop.variety}</p>
+                  <h3 className="text-lg font-semibold text-gray-900">{crop.type} ({crop.variety})</h3>
+                  <p className="text-gray-600 text-sm">{getFarmName(crop.farmId)}</p>
                 </div>
                 <div className="flex space-x-2">
                   <button
@@ -281,47 +281,26 @@ const Crops: React.FC = () => {
               </div>
               
               <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Farm</span>
-                  <span className="text-sm font-medium">{getFarmName(crop.farmId)}</span>
+                <div className="flex items-center space-x-2 text-gray-600">
+                  <Calendar className="h-4 w-4 flex-shrink-0" />
+                  <span className="text-sm">Planted: {format(new Date(crop.plantingDate), 'MMM d, yyyy')}</span>
                 </div>
                 
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Area</span>
-                  <span className="text-sm font-medium">{crop.area} hectares</span>
+                <div className="flex items-center space-x-2 text-gray-600">
+                  <TrendingUp className="h-4 w-4 flex-shrink-0" />
+                  <span className="text-sm">Harvest: {format(new Date(crop.expectedHarvest), 'MMM d, yyyy')}</span>
                 </div>
                 
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Status</span>
-                  <span className={`text-xs px-2 py-1 rounded-full font-medium ${statusColors[crop.status]}`}>
+                <div className="flex items-center space-x-2 text-gray-600">
+                  <Wheat className="h-4 w-4 flex-shrink-0" />
+                  <span className="text-sm">Area: {crop.area} hectares</span>
+                </div>
+                
+                <div className="mt-2">
+                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${statusColors[crop.status]}`}>
                     {crop.status.charAt(0).toUpperCase() + crop.status.slice(1)}
                   </span>
                 </div>
-                
-                <div className="flex items-center space-x-2 text-gray-600">
-                  <Calendar className="h-4 w-4" />
-                  <span className="text-sm">
-                    Planted: {format(new Date(crop.plantingDate), 'MMM dd, yyyy')}
-                  </span>
-                </div>
-                
-                <div className="flex items-center space-x-2 text-gray-600">
-                  <TrendingUp className="h-4 w-4" />
-                  <span className="text-sm">
-                    Harvest: {format(new Date(crop.expectedHarvest), 'MMM dd, yyyy')}
-                  </span>
-                </div>
-                
-                {crop.inputs.length > 0 && (
-                  <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium text-gray-700">Total Inputs Cost</span>
-                      <span className="text-lg font-bold text-emerald-600">
-                        K {crop.inputs.reduce((sum, input) => sum + input.cost, 0)}
-                      </span>
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -330,13 +309,13 @@ const Crops: React.FC = () => {
         {userCrops.length === 0 && userFarms.length > 0 && (
           <div className="md:col-span-2 lg:col-span-3 text-center py-12">
             <Wheat className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No crops planted yet</h3>
-            <p className="text-gray-600 mb-4">Start by planting your first crop on one of your farms</p>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No crops yet</h3>
+            <p className="text-gray-600 mb-4">Start by adding your first crop to begin tracking</p>
             <button
               onClick={() => setShowAddForm(true)}
               className="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition-colors"
             >
-              Plant Your First Crop
+              Add Your First Crop
             </button>
           </div>
         )}

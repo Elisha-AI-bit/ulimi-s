@@ -257,16 +257,16 @@ const USSD: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Phone Simulator */}
-        <div className="bg-white rounded-lg shadow-lg p-6">
+        <div className="bg-white rounded-lg shadow-lg p-4 md:p-6">
           <div className="mx-auto max-w-sm">
             {/* Phone Frame */}
-            <div className="bg-black rounded-3xl p-6">
-              <div className="bg-gray-900 rounded-2xl p-4">
-                <div className="bg-green-900 text-green-300 font-mono text-xs p-3 rounded-lg h-96 overflow-y-auto">
+            <div className="bg-black rounded-3xl p-4 md:p-6">
+              <div className="bg-gray-900 rounded-2xl p-3 md:p-4">
+                <div className="bg-green-900 text-green-300 font-mono text-xs p-3 rounded-lg h-80 md:h-96 overflow-y-auto">
                   {/* USSD Screen */}
                   <div className="space-y-2">
                     {ussdHistory.map((line, index) => (
-                      <div key={index} className="text-green-300">
+                      <div key={index} className="text-green-300 text-xs md:text-sm">
                         {line}
                       </div>
                     ))}
@@ -278,7 +278,7 @@ const USSD: React.FC = () => {
                       <button
                         key={option.key}
                         onClick={() => handleOptionSelect(option)}
-                        className="block w-full text-left text-green-300 hover:bg-green-800 px-2 py-1 rounded transition-colors"
+                        className="block w-full text-left text-green-300 hover:bg-green-800 px-2 py-1 rounded transition-colors text-xs md:text-sm"
                       >
                         {option.key}. {option.label}
                       </button>
@@ -291,7 +291,7 @@ const USSD: React.FC = () => {
                   {['1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0', '#'].map((key) => (
                     <button
                       key={key}
-                      className="bg-gray-700 text-white py-3 rounded-lg hover:bg-gray-600 transition-colors font-mono"
+                      className="bg-gray-700 text-white py-2 md:py-3 rounded-lg hover:bg-gray-600 transition-colors font-mono text-sm md:text-base"
                     >
                       {key}
                     </button>
@@ -300,7 +300,7 @@ const USSD: React.FC = () => {
                 
                 <button
                   onClick={handleReset}
-                  className="w-full mt-4 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors"
+                  className="w-full mt-4 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition-colors text-sm md:text-base"
                 >
                   End Call
                 </button>
@@ -310,13 +310,13 @@ const USSD: React.FC = () => {
         </div>
 
         {/* USSD Information */}
-        <div className="space-y-6">
-          <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="space-y-4 md:space-y-6">
+          <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center space-x-2">
               <Smartphone className="h-5 w-5" />
               <span>How to Use USSD</span>
             </h3>
-            <div className="space-y-3 text-gray-700">
+            <div className="space-y-3 text-gray-700 text-sm md:text-base">
               <p>1. Dial *123# from any mobile phone</p>
               <p>2. Follow the menu prompts</p>
               <p>3. Select options by pressing the number keys</p>
@@ -324,7 +324,7 @@ const USSD: React.FC = () => {
             </div>
           </div>
           
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-white rounded-lg shadow-md p-4 md:p-6">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Available Services</h3>
             <div className="space-y-4">
               <div className="border-l-4 border-emerald-500 pl-4">
@@ -342,7 +342,7 @@ const USSD: React.FC = () => {
             </div>
           </div>
           
-          <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-6">
+          <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 md:p-6">
             <h3 className="font-semibold text-emerald-800 mb-2">Why USSD?</h3>
             <ul className="text-emerald-700 text-sm space-y-2">
               <li>• Works on any mobile phone (no smartphone required)</li>

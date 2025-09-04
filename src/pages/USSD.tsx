@@ -59,6 +59,8 @@ const USSD: React.FC = () => {
       id: 'crops',
       text: 'Your Crops:\n\n1. Maize (SC627)\n   Status: Growing\n   Expected: Apr 2025\n\n2. Tomatoes (Roma)\n   Status: Flowering\n   Expected: Dec 2024',
       options: [
+        { key: '1', label: 'View Details', nextStep: 'crop_details' },
+        { key: '2', label: 'Add Input', nextStep: 'add_input' },
         { key: '#', label: 'Back', nextStep: 'farmer' },
         { key: '0', label: 'Exit', action: 'exit' }
       ]
@@ -78,6 +80,144 @@ const USSD: React.FC = () => {
         { key: '#', label: 'Back to Main Menu', nextStep: 'main' },
         { key: '0', label: 'Exit', action: 'exit' }
       ]
+    },
+    // Adding missing step definitions
+    browse: {
+      id: 'browse',
+      text: 'Browse Products\n\n1. Fresh Maize (SC627)\n   Price: K 6.80/kg\n   Farmer: Mwanza Family Farm\n\n2. Roma Tomatoes\n   Price: K 12.80/kg\n   Farmer: Green Valley Farm\n\n3. Cabbage\n   Price: K 8.80/kg\n   Farmer: Mwanza Family Farm',
+      options: [
+        { key: '1', label: 'Order Maize', action: 'order' },
+        { key: '2', label: 'Order Tomatoes', action: 'order' },
+        { key: '3', label: 'Order Cabbage', action: 'order' },
+        { key: '#', label: 'Back', nextStep: 'customer' },
+        { key: '0', label: 'Exit', action: 'exit' }
+      ]
+    },
+    customer_orders: {
+      id: 'customer_orders',
+      text: 'Your Orders:\n\nOrder #ORD-789456\nStatus: Delivered\nDate: 2024-11-15\nTotal: K 272.00\n\nOrder #ORD-123789\nStatus: Processing\nDate: 2024-11-20\nTotal: K 128.00',
+      options: [
+        { key: '1', label: 'View Details', nextStep: 'order_details' },
+        { key: '#', label: 'Back', nextStep: 'customer' },
+        { key: '0', label: 'Exit', action: 'exit' }
+      ]
+    },
+    alerts: {
+      id: 'alerts',
+      text: 'Price Alerts:\n\n1. Maize - Set at K 7.00/kg\n   Current: K 6.80/kg\n   Status: Below threshold\n\n2. Tomatoes - Set at K 12.00/kg\n   Current: K 12.80/kg\n   Status: Above threshold',
+      options: [
+        { key: '1', label: 'Modify Alert', nextStep: 'modify_alert' },
+        { key: '2', label: 'Add New Alert', nextStep: 'add_alert' },
+        { key: '#', label: 'Back', nextStep: 'customer' },
+        { key: '0', label: 'Exit', action: 'exit' }
+      ]
+    },
+    contact: {
+      id: 'contact',
+      text: 'Contact Farmers:\n\n1. Mwanza Family Farm\n   Phone: 0971234567\n   Location: Chongwe District\n\n2. Green Valley Farm\n   Phone: 0969876543\n   Location: Kafue District',
+      options: [
+        { key: '1', label: 'Call Mwanza Farm', action: 'call' },
+        { key: '2', label: 'Call Green Valley', action: 'call' },
+        { key: '#', label: 'Back', nextStep: 'customer' },
+        { key: '0', label: 'Exit', action: 'exit' }
+      ]
+    },
+    products: {
+      id: 'products',
+      text: 'Your Products:\n\n1. Fresh Maize (SC627)\n   Quantity: 500 kg\n   Price: K 6.80/kg\n   Status: Available\n\n2. Roma Tomatoes\n   Quantity: 200 kg\n   Price: K 12.80/kg\n   Status: Available',
+      options: [
+        { key: '1', label: 'Update Maize', nextStep: 'update_product' },
+        { key: '2', label: 'Update Tomatoes', nextStep: 'update_product' },
+        { key: '3', label: 'Add New Product', nextStep: 'add_product' },
+        { key: '#', label: 'Back', nextStep: 'farmer' },
+        { key: '0', label: 'Exit', action: 'exit' }
+      ]
+    },
+    farmer_orders: {
+      id: 'farmer_orders',
+      text: 'Orders Received:\n\nOrder #ORD-789456\nCustomer: John Mwanza\nStatus: Delivered\nTotal: K 272.00\n\nOrder #ORD-123789\nCustomer: Mary Phiri\nStatus: Processing\nTotal: K 128.00',
+      options: [
+        { key: '1', label: 'Update Status', nextStep: 'update_order' },
+        { key: '#', label: 'Back', nextStep: 'farmer' },
+        { key: '0', label: 'Exit', action: 'exit' }
+      ]
+    },
+    order_details: {
+      id: 'order_details',
+      text: 'Order Details:\n\nOrder #ORD-789456\nCustomer: John Mwanza\nDate: 2024-11-15\nStatus: Delivered\n\nItems:\n- Maize (SC627) 40kg @ K 6.80/kg = K 272.00\n\nShipping: Chongwe Market\nDelivery Date: 2024-11-16',
+      options: [
+        { key: '#', label: 'Back', nextStep: 'customer_orders' },
+        { key: '0', label: 'Exit', action: 'exit' }
+      ]
+    },
+    modify_alert: {
+      id: 'modify_alert',
+      text: 'Modify Price Alert:\n\nCurrent: Maize - K 7.00/kg\n\nEnter new price threshold:',
+      options: [
+        { key: '1', label: 'K 6.50', action: 'update_alert' },
+        { key: '2', label: 'K 7.50', action: 'update_alert' },
+        { key: '3', label: 'Custom Amount', nextStep: 'custom_alert' },
+        { key: '#', label: 'Back', nextStep: 'alerts' },
+        { key: '0', label: 'Exit', action: 'exit' }
+      ]
+    },
+    add_alert: {
+      id: 'add_alert',
+      text: 'Add New Price Alert:\n\nSelect crop:\n1. Maize\n2. Tomatoes\n3. Cabbage\n4. Onions',
+      options: [
+        { key: '1', label: 'Maize', nextStep: 'set_maize_alert' },
+        { key: '2', label: 'Tomatoes', nextStep: 'set_tomato_alert' },
+        { key: '#', label: 'Back', nextStep: 'alerts' },
+        { key: '0', label: 'Exit', action: 'exit' }
+      ]
+    },
+    update_product: {
+      id: 'update_product',
+      text: 'Update Product:\n\nProduct: Fresh Maize (SC627)\nCurrent Price: K 6.80/kg\nAvailable: 500 kg\n\n1. Update Price\n2. Update Quantity\n3. Mark as Sold Out',
+      options: [
+        { key: '1', label: 'Change Price', nextStep: 'change_price' },
+        { key: '2', label: 'Change Quantity', nextStep: 'change_quantity' },
+        { key: '#', label: 'Back', nextStep: 'products' },
+        { key: '0', label: 'Exit', action: 'exit' }
+      ]
+    },
+    add_product: {
+      id: 'add_product',
+      text: 'Add New Product:\n\nEnter product details:\n1. Select Crop\n2. Set Price\n3. Set Quantity',
+      options: [
+        { key: '1', label: 'Select Crop', nextStep: 'select_crop' },
+        { key: '#', label: 'Back', nextStep: 'products' },
+        { key: '0', label: 'Exit', action: 'exit' }
+      ]
+    },
+    update_order: {
+      id: 'update_order',
+      text: 'Update Order Status:\n\nOrder #ORD-123789\nStatus: Processing\n\n1. Mark as Shipped\n2. Mark as Delivered\n3. Cancel Order',
+      options: [
+        { key: '1', label: 'Shipped', action: 'update_status' },
+        { key: '2', label: 'Delivered', action: 'update_status' },
+        { key: '3', label: 'Cancel', action: 'cancel_order' },
+        { key: '#', label: 'Back', nextStep: 'farmer_orders' },
+        { key: '0', label: 'Exit', action: 'exit' }
+      ]
+    },
+    crop_details: {
+      id: 'crop_details',
+      text: 'Crop Details:\n\nMaize (SC627)\nFarm: Mwanza Family Farm\nPlanting Date: 2024-08-15\nExpected Harvest: 2025-04-20\nCurrent Status: Growing\nArea: 15 hectares',
+      options: [
+        { key: '#', label: 'Back', nextStep: 'crops' },
+        { key: '0', label: 'Exit', action: 'exit' }
+      ]
+    },
+    add_input: {
+      id: 'add_input',
+      text: 'Add Crop Input:\n\nSelect input type:\n1. Fertilizer\n2. Pesticide\n3. Water\n4. Labor',
+      options: [
+        { key: '1', label: 'Fertilizer', nextStep: 'add_fertilizer' },
+        { key: '2', label: 'Pesticide', nextStep: 'add_pesticide' },
+        { key: '#', label: 'Back', nextStep: 'crops' },
+        { key: '0', label: 'Exit', action: 'exit' }
+      ]
     }
   };
 
@@ -90,8 +230,14 @@ const USSD: React.FC = () => {
 
     if (option.nextStep) {
       const step = ussdSteps[option.nextStep];
-      setCurrentStep(option.nextStep);
-      setUssdHistory(prev => [...prev, `${option.key}. ${option.label}`, step.text]);
+      if (step) {
+        setCurrentStep(option.nextStep);
+        setUssdHistory(prev => [...prev, `${option.key}. ${option.label}`, step.text]);
+      } else {
+        // Handle case where step is not defined
+        setCurrentStep('main');
+        setUssdHistory(prev => [...prev, `${option.key}. ${option.label}`, 'Error: Service not available. Returning to main menu.']);
+      }
     }
   };
 
@@ -100,7 +246,7 @@ const USSD: React.FC = () => {
     setUssdHistory(['*123# - Ulimi USSD']);
   };
 
-  const currentStepData = ussdSteps[currentStep];
+  const currentStepData = ussdSteps[currentStep] || ussdSteps['main'];
 
   return (
     <div className="space-y-6">
